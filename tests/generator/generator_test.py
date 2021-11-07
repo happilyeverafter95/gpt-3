@@ -1,7 +1,7 @@
 from typing import Dict
 
 import pytest
-from src.generator import GPT3Generator
+from src.gpt3_simple_primer.generator import GPT3Generator
 
 
 @pytest.mark.parametrize('instructions, examples, prompt', [('List the ingredients for this meal',
