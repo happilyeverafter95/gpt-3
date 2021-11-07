@@ -9,7 +9,7 @@ with open('README.md', 'r', encoding='utf-8') as fh:
 
 
 setuptools.setup(
-    name='gpt3_wrapper',
+    name='gpt3_simple_primer',
     version=VERSION,
     author='happilyeverafter95',
     author_email='author@example.com',  # TODO: update email
