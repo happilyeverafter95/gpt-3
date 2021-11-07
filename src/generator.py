@@ -15,7 +15,7 @@ class GPT3Generator:
                  max_tokens: int,
                  temperature: float = 1,
                  top_p: int = 1) -> None:
-        '''OpenAI API wrapper
+        '''Wrapper for simplifying priming
         see https://beta.openai.com/docs/api-reference for documentation
         '''
         self.engine = engine
