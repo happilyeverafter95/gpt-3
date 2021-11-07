@@ -31,6 +31,6 @@ generator.set_instructions('List the ingredients for this meal.')
 generator.add_example('apple pie', 'apple, butter, flour, egg, cinnamon, crust, sugar')
 generator.add_example('guacamole', 'avocado, tomato, onion, lime, salt')
 
-# This should return 'graham cracker, lime, milk, sugar, egg, vanilla'
+# key lime, egg, sugar, butter, graham cracker, cream
 generator.generate('key lime pie')
 ```

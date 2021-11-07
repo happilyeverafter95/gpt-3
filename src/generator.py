@@ -1,4 +1,4 @@
-from typing import List, List
+from typing import Dict
 import logging
 
 import openai
@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class GPT3Generator:
+    # TODO: add parametrization around more flexible priming (instead of always using input-output)
     def __init__(self,
                  engine: str,
                  max_tokens: int,
@@ -23,7 +24,7 @@ class GPT3Generator:
         self.temperature = temperature
         self.top_p = top_p
         self.instructions: str = ''
-        self.examples: List[List[str]] = []
+        self.examples: Dict[str, str] = {}
 
     def set_key(self, key: str) -> None:
         '''set OpenAI API key'''
@@ -49,23 +50,24 @@ class GPT3Generator:
 
         output (str): output text in example
         '''
-        if [input, output] in self.examples:
+        if input in self.examples:
             logger.warning(f'Example already exists. This will cause duplicate examples in the prompt.')
-        self.examples.append([input, output])
-
-    def remove_example(self, input: str, output: str) -> None:
-        '''Removes an example'''
-        if [input, output] in self.examples:
-            list(filter(lambda x: x != [input, output], self.examples))
         else:
-            logger.warning(f'Example {input} -> {output} not found in existing examples.')
+            self.examples[input] = output
+
+    def remove_example(self, input: str) -> None:
+        '''Removes an example'''
+        try:
+            del self.examples[input]
+        except KeyError:
+            logger.warning(f'Example {input} not found in existing examples.')
 
     def get_prompt(self) -> str:
         '''Returns the prompt used for language generation'''
         if self.instructions == '' and not self.examples:
             raise ValueError('No prompt has been provided. Please use at least one of set_instructions(), add_examples().')
 
-        expanded_examples = '\n\n'.join([f'Input: {example[0]}\nOutput: {example[1]}' for example in self.examples])
+        expanded_examples = '\n\n'.join([f'Input: {k}\nOutput: {v}' for k, v in self.examples.items()])
         
         return f'{self.instructions}{expanded_examples}'
 
