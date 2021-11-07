@@ -77,9 +77,7 @@ class GPT3Generator:
                                             prompt=prompt,
                                             max_tokens=self.max_tokens,
                                             temperature=self.temperature,
-                                            top_p=self.top_p,
-                                            n=1,
-                                            stream=False)
+                                            top_p=self.top_p)
         except openai.error.AuthenticationError:
             raise Exception('Use set_key to set OpenAI key. If already set, check if it is correct.')
 
