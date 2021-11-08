@@ -45,7 +45,7 @@ generator.set_instructions('List the ingredients for this meal.')
 generator.add_example('apple pie', 'apple, butter, flour, egg, cinnamon, crust, sugar')
 generator.add_example('guacamole', 'avocado, tomato, onion, lime, salt')
 
-# key lime, egg, sugar, butter, graham cracker, cream
+# Ingredients: cream, egg yolk, sugar, lime, key lime juice
 generator.generate(starting_text='key lime pie',
                    engine='davinci',
                    max_tokens=20,

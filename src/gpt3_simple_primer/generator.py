@@ -78,5 +78,4 @@ class GPT3Generator:
     def generate(self, starting_text: str, **kwargs) -> None:
         '''Get generated text'''
         gpt3_response = self.get_gpt3_response(starting_text, **kwargs)
-        generated_text = gpt3_response['choices'][0]['text'].strip()
-        return generated_text.split('\n\n{self.input_text}')[0].replace('{self.output_text}: ', '')
+        return gpt3_response['choices'][0]['text'].strip()
