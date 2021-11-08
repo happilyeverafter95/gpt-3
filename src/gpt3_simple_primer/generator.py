@@ -1,4 +1,5 @@
 from typing import Dict
+
 import logging
 
 import openai
@@ -11,19 +12,11 @@ logger = logging.getLogger(__name__)
 
 class GPT3Generator:
     def __init__(self,
-                 engine: str,
-                 max_tokens: int,
-                 temperature: float = 1,
-                 top_p: int = 1,
                  input_text: str = 'Input',
                  output_text: str = 'Output') -> None:
         '''Wrapper for simplifying priming
         see https://beta.openai.com/docs/api-reference for documentation
         '''
-        self.engine = engine
-        self.max_tokens = max_tokens
-        self.temperature = temperature
-        self.top_p = top_p
         self.input_text = input_text
         self.output_text = output_text
         self.instructions: str = ''
@@ -74,20 +67,16 @@ class GPT3Generator:
         
         return f'{self.instructions}{expanded_examples}'
 
-    def get_gpt3_response(self, starting_text: str) -> openai.openai_response:
+    def get_gpt3_response(self, starting_text: str, **kwargs) -> openai.openai_response:
         '''Call OpenAI API to get the prompt'''
         prompt = self.get_prompt() + f'\n\n{self.input_text}: {starting_text}'
         try:
-            return openai.Completion.create(engine=self.engine,
-                                            prompt=prompt,
-                                            max_tokens=self.max_tokens,
-                                            temperature=self.temperature,
-                                            top_p=self.top_p)
+            return openai.Completion.create(prompt=prompt, **kwargs)
         except openai.error.AuthenticationError:
             raise Exception('Use set_key to set OpenAI key. If already set, check if it is correct.')
 
-    def generate(self, starting_text: str) -> None:
+    def generate(self, starting_text: str, **kwargs) -> None:
         '''Get generated text'''
-        gpt3_response = self.get_gpt3_response(starting_text)
+        gpt3_response = self.get_gpt3_response(starting_text, **kwargs)
         generated_text = gpt3_response['choices'][0]['text'].strip()
         return generated_text.split('\n\n{self.input_text}')[0].replace('{self.output_text}: ', '')
