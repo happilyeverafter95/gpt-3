@@ -26,9 +26,15 @@ jobs:
       - run:
           name: init .pypirc
           command: |
-            echo -e "[pypi]" >> ~/.pypirc
-            echo -e "username = happilyeverafter95" >> ~/.pypirc
-            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+            if [ $CIRCLE_BRANCH == 'main' ] ; then
+              echo -e "[pypi]" >> ~/.pypirc
+              echo -e "username = happilyeverafter95" >> ~/.pypirc
+              echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+            elif [ $CIRCLE_BRANCH == 'preprod' ] ; then
+              echo -e "[testpypi]" >> ~/.pypirc
+              echo -e "username = happilyeverafter95" >> ~/.pypirc
+              echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+            fi
       - run:
           # TODO: use makefile instead
           name: create packages
@@ -37,14 +43,10 @@ jobs:
               python3 setup.py sdist bdist_wheel
             fi
       - run:
-          name: upload to pypi test index (preprod)
-          command: |
-            if [ $CIRCLE_BRANCH == 'preprod' ] ; then
-              twine upload --repository testpypi dist/*
-            fi
-      - run:
-          name: upload to pypi
+          name: upload to pypi 
           command: |
             if [ $CIRCLE_BRANCH == 'main' ] ; then
               twine upload dist/*
+            elif [ $CIRCLE_BRANCH == 'preprod' ] ; then
+              twine upload --repository testpypi dist/*
             fi
