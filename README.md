@@ -30,6 +30,8 @@ You will need an API key from OpenAI to access GPT-3.
 
 ## Usage
 
+`input_text` and `output_text` determines how input and output are delimited in the examples. The default is to use `Input` and `Output`.
+
 ```
 from gpt3_simple_primer import GPT3Generator
 
@@ -38,7 +40,9 @@ key = 'sk-xxxxx'
 generator = GPT3Generator(engine='davinci',
                           max_tokens=20,
                           temperature=0.5,
-                          top_p=1)
+                          top_p=1,
+                          input_text='Food',
+                          output_text='Ingredients')
 
 generator.set_key(key)
 generator.set_instructions('List the ingredients for this meal.')
@@ -47,4 +51,16 @@ generator.add_example('guacamole', 'avocado, tomato, onion, lime, salt')
 
 # key lime, egg, sugar, butter, graham cracker, cream
 generator.generate('key lime pie')
+```
+
+To see the prompt used for priming:
+
+```
+generator.get_prompt()
+```
+
+To remove an example from the prompt:
+
+```
+generator.remove_example('apple pie')
 ```
