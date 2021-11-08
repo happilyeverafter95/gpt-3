@@ -1,5 +1,4 @@
 from typing import Dict
-from functools import partial
 
 import logging
 
