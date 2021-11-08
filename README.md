@@ -1,6 +1,6 @@
 # gpt3_simple_primer
 
-Wrapper used to simplify GPT-3 priming.
+Simple GPT-3 primer using `openai`.
 
 ## Background
 
