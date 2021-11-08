@@ -62,15 +62,5 @@ generator.get_prompt()
 To remove an example from the prompt:
 
 ```
-
-To see the prompt used for priming:
-
-```
-generator.get_prompt()
-```
-
-To remove an example from the prompt:
-
-```
 generator.remove_example('apple pie')
 ```
