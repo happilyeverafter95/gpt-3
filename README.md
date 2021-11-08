@@ -37,11 +37,7 @@ from gpt3_simple_primer import GPT3Generator
 
 key = 'sk-xxxxx'
 
-generator = GPT3Generator(engine='davinci',
-                          max_tokens=20,
-                          temperature=0.5,
-                          top_p=1,
-                          input_text='Food',
+generator = GPT3Generator(input_text='Food',
                           output_text='Ingredients')
 
 generator.set_key(key)
@@ -50,7 +46,11 @@ generator.add_example('apple pie', 'apple, butter, flour, egg, cinnamon, crust, 
 generator.add_example('guacamole', 'avocado, tomato, onion, lime, salt')
 
 # key lime, egg, sugar, butter, graham cracker, cream
-generator.generate('key lime pie')
+generator.generate(starting_text='key lime pie',
+                   engine='davinci',
+                   max_tokens=20,
+                   temperature=0.5,
+                   top_p=1)
 ```
 
 To see the prompt used for priming:
