@@ -40,7 +40,7 @@ jobs:
           name: upload to pypi test index (preprod)
           command: |
             if [ $CIRCLE_BRANCH == 'preprod' ] ; then
-              twine upload testpypi dist/*
+              twine upload --repository testpypi dist/*
             fi
       - run:
           name: upload to pypi
