@@ -64,3 +64,16 @@ To remove an example from the prompt:
 ```
 generator.remove_example('apple pie')
 ```
+
+## Usage Examples
+
+The library contains some example use cases.
+
+```
+from gpt3_simple_primer.examples import idiom_explainer
+
+key = 'sk-xxxx'
+
+idiom_explainer.set_key(key)
+idiom_explainer.generate('hill to die on', max_tokens=15, engine='davinci')
+```
