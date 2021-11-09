@@ -35,7 +35,7 @@ You will need an API key from OpenAI to access GPT-3.
 ```
 from gpt3_simple_primer import GPT3Generator
 
-key = 'sk-xxxxx'
+key = 'sk-xxxxx'  # openai key
 
 generator = GPT3Generator(input_text='Food',
                           output_text='Ingredients')
@@ -72,7 +72,7 @@ The library includes examples of GPT-3 applications based off of specific prompt
 ```
 from gpt3_simple_primer.examples import idiom_explainer
 
-key = 'sk-xxxx'
+key = 'sk-xxxxx'  # openai key
 
 idiom_explainer.set_key(key)
 idiom_explainer.generate('hill to die on', max_tokens=15, engine='davinci')
