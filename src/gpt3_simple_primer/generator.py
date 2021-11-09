@@ -61,19 +61,22 @@ class GPT3Generator:
     def get_prompt(self) -> str:
         '''Returns the prompt used for language generation'''
         if self.instructions == '' and not self.examples:
-            raise ValueError('No prompt has been provided. Please use at least one of set_instructions(), add_examples().')
+            raise ValueError('No prompt has been provided. Please use at least one of set_instructions(), add_example().')
 
         expanded_examples = '\n\n'.join([f'{self.input_text}: {k}\n{self.output_text}: {v}' for k, v in self.examples.items()])
         
+        if self.examples:
+            expanded_examples += f'\n\n{self.input_text}:'
+
         return f'{self.instructions}{expanded_examples}'
 
     def get_gpt3_response(self, starting_text: str, **kwargs) -> openai.openai_response:
         '''Call OpenAI API to get the prompt'''
-        prompt = self.get_prompt() + f'\n\n{self.input_text}: {starting_text}'
+        prompt = self.get_prompt() + ' ' + starting_text
         try:
             return openai.Completion.create(prompt=prompt, **kwargs)
         except openai.error.AuthenticationError:
-            raise Exception('Use set_key to set OpenAI key. If already set, check if it is correct.')
+            raise Exception('Unable to authenticate: use set_key() to set OpenAI key.')
 
     def generate(self, starting_text: str, **kwargs) -> None:
         '''Get generated text'''

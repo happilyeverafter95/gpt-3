@@ -64,3 +64,16 @@ To remove an example from the prompt:
 ```
 generator.remove_example('apple pie')
 ```
+
+## Examples
+
+The library includes examples of GPT-3 applications based off of specific prompts.
+
+```
+from gpt3_simple_primer.examples import idiom_explainer
+
+key = 'sk-xxxx'
+
+idiom_explainer.set_key(key)
+idiom_explainer.generate('hill to die on', max_tokens=15, engine='davinci')
+```
