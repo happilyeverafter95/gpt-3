@@ -10,6 +10,11 @@ logging.basicConfig(level=level)
 logger = logging.getLogger(__name__)
 
 
+def set_api_key(key) -> None:
+    '''set OpenAI API key'''
+    openai.api_key = key
+
+
 class GPT3Generator:
     def __init__(self,
                  input_text: str = 'Input',
@@ -21,10 +26,6 @@ class GPT3Generator:
         self.output_text = output_text
         self.instructions: str = ''
         self.examples: Dict[str, str] = {}
-
-    def set_key(self, key: str) -> None:
-        '''set OpenAI API key'''
-        openai.api_key = key
 
     def set_instructions(self, instructions: str) -> None:
         '''Set instructions for language generation (followed by examples)
