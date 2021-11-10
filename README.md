@@ -33,14 +33,14 @@ You will need an API key from OpenAI to access GPT-3.
 `input_text` and `output_text` determines how input and output are delimited in the examples. The default is to use `Input` and `Output`.
 
 ```
-from gpt3_simple_primer import GPT3Generator
+from gpt3_simple_primer import GPT3Generator, set_api_key
 
-key = 'sk-xxxxx'  # openai key
+KEY = 'sk-xxxxx'  # openai key
+set_api_key(KEY)
 
 generator = GPT3Generator(input_text='Food',
                           output_text='Ingredients')
 
-generator.set_key(key)
 generator.set_instructions('List the ingredients for this meal.')
 generator.add_example('apple pie', 'apple, butter, flour, egg, cinnamon, crust, sugar')
 generator.add_example('guacamole', 'avocado, tomato, onion, lime, salt')
@@ -70,10 +70,11 @@ generator.remove_example('apple pie')
 The library includes examples of GPT-3 applications based off of specific prompts.
 
 ```
+from gpt3_simple_primer import set_api_key
 from gpt3_simple_primer.examples import idiom_explainer
 
-key = 'sk-xxxxx'  # openai key
+KEY = 'sk-xxxxx'  # openai key
+set_api_key(KEY)
 
-idiom_explainer.set_key(key)
 idiom_explainer.generate('hill to die on', max_tokens=15, engine='davinci')
 ```
