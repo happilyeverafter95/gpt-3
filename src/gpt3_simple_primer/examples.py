@@ -1,4 +1,4 @@
-from src.gpt3_simple_primer.generator import GPT3Generator
+from .generator import GPT3Generator
 
 
 '''Find the birthdays of famous people'''
