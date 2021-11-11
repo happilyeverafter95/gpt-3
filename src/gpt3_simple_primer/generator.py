@@ -68,7 +68,7 @@ class GPT3Generator:
     def get_gpt3_response(self, starting_text: str, **kwargs) -> openai.openai_response:
         '''Call OpenAI API to get the prompt'''
         if self.examples:
-            starting_text = f'\n\n{self.input_text}: {starting_text}\n{self.output_text}: '
+            starting_text = f'\n\n{self.input_text}: {starting_text}\n'
         self.full_prompt = self.get_prompt() + starting_text
 
         try:
