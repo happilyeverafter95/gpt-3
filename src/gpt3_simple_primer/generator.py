@@ -37,7 +37,7 @@ class GPT3Generator:
         '''
         if self.instructions != '':
             logger.warning('Previous instructions overwritten.')
-        self.instructions = instructions + '\n'
+        self.instructions = instructions + '\n\n'
 
     def add_example(self, input: str, output: str) -> None:
         '''Add an example to the primed prompt
