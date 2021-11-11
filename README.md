@@ -46,7 +46,7 @@ generator.add_example('apple pie', 'apple, butter, flour, egg, cinnamon, crust, 
 generator.add_example('guacamole', 'avocado, tomato, onion, lime, salt')
 
 # Ingredients: cream, egg yolk, sugar, lime, key lime juice
-generator.generate(starting_text='key lime pie',
+generator.generate(prompt='key lime pie',
                    engine='davinci',
                    max_tokens=20,
                    temperature=0.5,
