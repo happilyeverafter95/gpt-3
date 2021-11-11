@@ -26,6 +26,7 @@ class GPT3Generator:
         self.output_text = output_text
         self.instructions: str = ''
         self.examples: Dict[str, str] = {}
+        self.full_prompt: str = ''
 
     def set_instructions(self, instructions: str) -> None:
         '''Set instructions for language generation (followed by examples)
@@ -36,7 +37,7 @@ class GPT3Generator:
         '''
         if self.instructions != '':
             logger.warning('Previous instructions overwritten.')
-        self.instructions = instructions + '\n\n'
+        self.instructions = instructions + '\n'
 
     def add_example(self, input: str, output: str) -> None:
         '''Add an example to the primed prompt
@@ -62,21 +63,24 @@ class GPT3Generator:
     def get_prompt(self) -> str:
         '''Returns the prompt used for language generation'''
         expanded_examples = '\n\n'.join([f'{self.input_text}: {k}\n{self.output_text}: {v}' for k, v in self.examples.items()])
-        
-        if self.examples:
-            expanded_examples += f'\n\n{self.input_text}: '
-
         return f'{self.instructions}{expanded_examples}'
 
     def get_gpt3_response(self, starting_text: str, **kwargs) -> openai.openai_response:
         '''Call OpenAI API to get the prompt'''
-        prompt = self.get_prompt() + starting_text
+        if self.examples:
+            starting_text = f'\n\n{self.input_text}: {starting_text}\n{self.output_text}: '
+        self.full_prompt = self.get_prompt() + starting_text
+
         try:
-            return openai.Completion.create(prompt=prompt, **kwargs)
+            return openai.Completion.create(prompt=self.full_prompt, **kwargs)
         except openai.error.AuthenticationError:
             raise Exception('Unable to authenticate: use set_api_key() to set OpenAI key.')
 
-    def generate(self, prompt: str, **kwargs) -> None:
+    def generate(self, prompt: str, **kwargs) -> Dict[str, str]:
         '''Get generated text'''
         gpt3_response = self.get_gpt3_response(prompt, **kwargs)
-        return gpt3_response['choices'][0]['text'].strip()
+        generated_text = gpt3_response['choices'][0]['text'].strip()
+        return {
+            'generated_text': generated_text,
+            'full_prompt': self.full_prompt
+        }
