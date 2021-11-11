@@ -48,7 +48,7 @@ class GPT3Generator:
         output (str): output text in example
         '''
         if input in self.examples:
-            logger.warning(f'Example already exists. This will cause duplicate examples in the prompt.')
+            logger.warning(f'Example already exists. This will create duplicate examples in the prompt.')
         else:
             self.examples[input] = output
 
