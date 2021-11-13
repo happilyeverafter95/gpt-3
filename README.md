@@ -1,4 +1,4 @@
-# gpt3_simple_primer
+# gpt3-simple-primer
 
 Simple GPT-3 primer using `openai`.
 
@@ -27,6 +27,14 @@ Ingredients: avocado, tomato, onion, lime, salt
 ## Requirements
 
 You will need an API key from OpenAI to access GPT-3.
+
+## Installation
+
+To install, run:
+
+```
+pip install gpt3-simple-primer
+```
 
 ## Usage
 
