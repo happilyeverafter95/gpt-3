@@ -72,7 +72,10 @@ class GPT3Generator:
         self.full_prompt = self.get_prompt() + starting_text
 
         try:
-            return openai.Completion.create(prompt=self.full_prompt, **kwargs)
+            if self.examples and 'stop' not in kwargs:
+                return openai.Completion.create(prompt=self.full_prompt, stop=f'{self.input_text}:', **kwargs)
+            else:
+                return openai.Completion.create(prompt=self.full_prompt, **kwargs)
         except openai.error.AuthenticationError:
             raise Exception('Unable to authenticate: use set_api_key() to set OpenAI key.')
 
